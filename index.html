@@ -837,39 +837,12 @@
     /* ─────────────────────────────────────────────
        CURSOR DOT
     ───────────────────────────────────────────── */
-    .cursor-dot {
-      width: 8px; height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 99999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s, width 0.25s, height 0.25s, background 0.25s;
-      mix-blend-mode: difference;
-    }
-    .cursor-ring {
-      width: 36px; height: 36px;
-      border: 1px solid rgba(201,168,76,0.5);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 99998;
-      transform: translate(-50%, -50%);
-      transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
-    }
-    @media (hover: none) {
-      .cursor-dot, .cursor-ring { display: none; }
-    }
+
   </style>
 </head>
 
 <body>
-  <!-- Custom cursor -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- ── NAVIGATION ────────────────────────────── -->
+<!-- ── NAVIGATION ────────────────────────────── -->
   <nav id="navbar">
     <a href="#hero" class="nav-logo">J.Hamilton</a>
     <ul class="nav-links">
@@ -991,13 +964,13 @@
         <span class="project-arrow">↗</span>
       </a>
 
-      <div class="project-card reveal reveal-delay-5">
+      <a href="https://jeffreyhamilton6399.github.io/TheAvatarHub" target="_blank" rel="noopener" class="project-card reveal reveal-delay-5">
         <div class="project-num">05</div>
         <span class="project-tag">Web / Fan Hub</span>
         <h3 class="project-name">ATLA Hub</h3>
         <p class="project-note">An interactive fan hub for Avatar: The Last Airbender, featuring lore, media, and community content.</p>
         <span class="project-arrow">↗</span>
-      </div>
+      </a>
 
       <div class="project-card reveal reveal-delay-6">
         <div class="project-num">06</div>
@@ -1063,7 +1036,7 @@
 
     <div class="cert-list">
 
-      <a href="certificates/Jeffrey_Hamilton_Architectural_Design_2_05092025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-1">
+      <a href="certificates/Jeffrey_Hamilton_Architectural_Design_2_05092025.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1073,7 +1046,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_CAD_Architectural_Design_I_12192023.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-2">
+      <a href="certificates/Jeffrey_Hamilton_CAD_Architectural_Design_I_12192023.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1083,7 +1056,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_1_05122025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-3">
+      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_1_05122025.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1093,7 +1066,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_2_Java__12182025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-4">
+      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_2_Java__12182025.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1103,7 +1076,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Digital_Media_1_12052024.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-1">
+      <a href="certificates/Jeffrey_Hamilton_Digital_Media_1_12052024.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1113,7 +1086,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Game_Development_Fundamentals_12122024.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-2">
+      <a href="certificates/Jeffrey_Hamilton_Game_Development_Fundamentals_12122024.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1123,7 +1096,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Robotics_1_12152025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-3">
+      <a href="certificates/Jeffrey_Hamilton_Robotics_1_12152025.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1133,7 +1106,7 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Unmanned_Aerial_Systems_12182025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-4">
+      <a href="certificates/Jeffrey_Hamilton_Unmanned_Aerial_Systems_12182025.pdf" target="_blank" rel="noopener" class="cert-item">
         <div class="cert-item-icon">
           <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
         </div>
@@ -1276,39 +1249,6 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => observer.observe(el));
 
-    // ── Custom cursor ───────────────────────────
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    window.addEventListener('mousemove', e => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      dot.style.left = mouseX + 'px';
-      dot.style.top  = mouseY + 'px';
-    });
-
-    (function animRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top  = ringY + 'px';
-      requestAnimationFrame(animRing);
-    })();
-
-    // Hover expand
-    document.querySelectorAll('a, button, .project-card').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        ring.style.width  = '56px';
-        ring.style.height = '56px';
-        ring.style.borderColor = 'rgba(201,168,76,0.9)';
-      });
-      el.addEventListener('mouseleave', () => {
-        ring.style.width  = '36px';
-        ring.style.height = '36px';
-        ring.style.borderColor = 'rgba(201,168,76,0.5)';
-      });
-    });
 
     // ── Smooth scroll for anchor links ──────────
     document.querySelectorAll('a[href^="#"]').forEach(a => {
