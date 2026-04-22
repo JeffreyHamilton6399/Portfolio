@@ -405,28 +405,25 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.8rem;
     }
 
     .project-card {
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 2.2rem;
+      padding: 0;
       position: relative;
       cursor: pointer;
       overflow: hidden;
       transition: border-color 0.3s, transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
       clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
     }
-    .project-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--gold-dim) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
+
+    /* Corner notch accent */
     .project-card::after {
       content: '';
       position: absolute;
@@ -435,44 +432,98 @@
       border-top: 16px solid var(--gold);
       border-left: 16px solid transparent;
       transition: border-top-color 0.3s;
+      z-index: 3;
     }
     .project-card:hover {
       border-color: rgba(201,168,76,0.4);
       transform: translateY(-6px);
       box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.08);
     }
-    .project-card:hover::before { opacity: 1; }
     .project-card:hover::after { border-top-color: #dbbe6a; }
 
-    .project-num {
-      font-family: var(--ff-display);
-      font-size: 3rem;
-      font-weight: 300;
-      color: var(--border);
-      line-height: 1;
-      margin-bottom: 1rem;
-      transition: color 0.3s;
+    /* Image area */
+    .project-img {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
     }
-    .project-card:hover .project-num { color: var(--gold-dim); }
+    .project-img img,
+    .project-img .img-placeholder {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease), filter 0.4s;
+      filter: brightness(0.75) saturate(0.8);
+    }
+    .project-card:hover .project-img img,
+    .project-card:hover .project-img .img-placeholder {
+      transform: scale(1.05);
+      filter: brightness(0.9) saturate(1);
+    }
+    .project-img-gif {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease), filter 0.4s;
+      filter: brightness(0.75) saturate(0.8);
+    }
+    .project-card:hover .project-img-gif {
+      transform: scale(1.05);
+      filter: brightness(0.9) saturate(1);
+    }
+    /* gradient overlay on image */
+    .project-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(22,25,32,0.85) 100%);
+      pointer-events: none;
+    }
+
+    /* No-image card image area */
+    .project-img-none {
+      background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-img-none .project-num-bg {
+      font-family: var(--ff-display);
+      font-size: 6rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.08);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Text content area */
+    .project-body {
+      padding: 1.6rem 2rem 2rem;
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
     .project-tag {
       display: inline-block;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gold);
       background: var(--gold-dim);
-      padding: 0.25rem 0.7rem;
-      margin-bottom: 0.9rem;
+      padding: 0.22rem 0.65rem;
+      margin-bottom: 0.7rem;
       border-radius: 2px;
+      align-self: flex-start;
     }
 
     .project-name {
       font-family: var(--ff-display);
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: 600;
       line-height: 1.2;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
       transition: color 0.3s;
     }
     .project-card:hover .project-name { color: var(--gold); }
@@ -480,12 +531,13 @@
     .project-note {
       font-size: 0.82rem;
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.55;
+      flex: 1;
     }
 
     .project-arrow {
       position: absolute;
-      bottom: 1.5rem; right: 1.8rem;
+      bottom: 1.4rem; right: 1.6rem;
       font-size: 1.1rem;
       color: var(--muted);
       transition: color 0.3s, transform 0.3s;
@@ -493,6 +545,15 @@
     .project-card:hover .project-arrow {
       color: var(--gold);
       transform: translate(4px, -4px);
+    }
+
+    .project-num {
+      font-family: var(--ff-display);
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.4rem;
     }
 
     /* ─────────────────────────────────────────────
@@ -598,23 +659,40 @@
 
     .cert-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.85rem;
       margin-top: 2rem;
     }
 
     .cert-item {
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 1.4rem 1.6rem;
+      padding: 1.3rem 1.5rem;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 1rem;
-      transition: border-color 0.3s, transform 0.3s;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      position: relative;
     }
     .cert-item:hover {
-      border-color: rgba(201,168,76,0.3);
-      transform: translateX(4px);
+      border-color: rgba(201,168,76,0.35);
+      transform: translateX(5px);
+      background: rgba(201,168,76,0.025);
+    }
+    .cert-item::after {
+      content: '↗';
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .cert-item:hover::after {
+      opacity: 1;
+      color: var(--gold);
     }
 
     a.cert-item {
@@ -623,11 +701,13 @@
     }
 
     .cert-item-icon {
-      width: 32px; height: 32px;
+      width: 40px; height: 40px;
       background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.2);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       font-size: 0.9rem;
+      color: var(--gold);
     }
 
     .cert-item-name {
@@ -932,63 +1012,75 @@
 
     <div class="projects-grid">
 
+      <!-- 01 — Arcadian King -->
       <a href="https://drive.google.com/drive/u/0/folders/15Z6Z5LzGXDxmJrTZn3WV1Nbb9D4_GRyx?surl=1&safe=active" target="_blank" rel="noopener" class="project-card reveal reveal-delay-1">
-        <div class="project-num">01</div>
-        <span class="project-tag">3D / Game</span>
-        <h3 class="project-name">Arcadian King</h3>
-        <p class="project-note">An epic 3D world-building project exploring regal environments and immersive character design.</p>
+        <div class="project-img project-img-none">
+          <div class="project-num-bg">01</div>
+        </div>
+        <div class="project-body">
+          <div class="project-num">01 — 3D / Game</div>
+          <span class="project-tag">3D / Game</span>
+          <h3 class="project-name">Arcadian King</h3>
+          <p class="project-note">An epic 3D world-building project exploring regal environments and immersive character design.</p>
+        </div>
         <span class="project-arrow">↗</span>
       </a>
 
+      <!-- 02 — School Animations (timpview gif as background) -->
       <a href="https://drive.google.com/drive/u/0/folders/1O0zvlk09MEzY3aKWY9ww-3gbG3ieK3HN?surl=1&safe=active" target="_blank" rel="noopener" class="project-card reveal reveal-delay-2">
-        <div class="project-num">02</div>
-        <span class="project-tag">Animation</span>
-        <h3 class="project-name">School Animations</h3>
-        <p class="project-note">A series of animated shorts and motion pieces crafted for educational storytelling.</p>
+        <div class="project-img">
+          <img src="gifs/timpview_logo.gif" alt="School Animations" class="project-img-gif" />
+        </div>
+        <div class="project-body">
+          <div class="project-num">02 — Animation</div>
+          <span class="project-tag">Animation</span>
+          <h3 class="project-name">School Animations</h3>
+          <p class="project-note">A series of animated shorts and motion pieces crafted for educational storytelling.</p>
+        </div>
         <span class="project-arrow">↗</span>
       </a>
 
+      <!-- 03 — Robots (images/robot) -->
       <a href="https://drive.google.com/drive/u/0/folders/16tLQJV6DddTNoeT5w3bn1fgl0eAHB9K5?surl=1&safe=active&q=sharedwith:public%20parent:16tLQJV6DddTNoeT5w3bn1fgl0eAHB9K" target="_blank" rel="noopener" class="project-card reveal reveal-delay-3">
-        <div class="project-num">03</div>
-        <span class="project-tag">3D / Character</span>
-        <h3 class="project-name">Robots</h3>
-        <p class="project-note">Fully rigged and animated robotic characters, exploring mechanical design and fluid motion.</p>
+        <div class="project-img">
+          <img src="images/robot" alt="Robot project" />
+        </div>
+        <div class="project-body">
+          <div class="project-num">03 — 3D / Character</div>
+          <span class="project-tag">3D / Character</span>
+          <h3 class="project-name">Robots</h3>
+          <p class="project-note">Fully rigged and animated robotic characters, exploring mechanical design and fluid motion.</p>
+        </div>
         <span class="project-arrow">↗</span>
       </a>
 
+      <!-- 04 — CAD Housing -->
       <a href="https://drive.google.com/drive/u/0/folders/1r71Wdb5uY_n4Q6YD1srzxSA3QBqubkqv?surl=1&safe=active" target="_blank" rel="noopener" class="project-card reveal reveal-delay-4">
-        <div class="project-num">04</div>
-        <span class="project-tag">CAD / Design</span>
-        <h3 class="project-name">CAD Housing</h3>
-        <p class="project-note">Precision architectural housing models built with computer-aided design tools and techniques.</p>
+        <div class="project-img project-img-none">
+          <div class="project-num-bg">04</div>
+        </div>
+        <div class="project-body">
+          <div class="project-num">04 — CAD / Design</div>
+          <span class="project-tag">CAD / Design</span>
+          <h3 class="project-name">CAD Housing</h3>
+          <p class="project-note">Precision architectural housing models built with computer-aided design tools and techniques.</p>
+        </div>
         <span class="project-arrow">↗</span>
       </a>
 
+      <!-- 05 — ATLA Hub (images/atla) -->
       <a href="https://jeffreyhamilton6399.github.io/TheAvatarHub" target="_blank" rel="noopener" class="project-card reveal reveal-delay-5">
-        <div class="project-num">05</div>
-        <span class="project-tag">Web / Fan Hub</span>
-        <h3 class="project-name">ATLA Hub</h3>
-        <p class="project-note">An interactive fan hub for Avatar: The Last Airbender, featuring lore, media, and community content.</p>
+        <div class="project-img">
+          <img src="images/atla" alt="ATLA Hub" />
+        </div>
+        <div class="project-body">
+          <div class="project-num">05 — Web / Fan Hub</div>
+          <span class="project-tag">Web / Fan Hub</span>
+          <h3 class="project-name">ATLA Hub</h3>
+          <p class="project-note">An interactive fan hub for Avatar: The Last Airbender, featuring lore, media, and community content.</p>
+        </div>
         <span class="project-arrow">↗</span>
       </a>
-
-      <div class="project-card reveal reveal-delay-6">
-        <div class="project-num">06</div>
-        <span class="project-tag">Blender</span>
-        <h3 class="project-name">Mystical Orb</h3>
-        <p class="project-note">A captivating 3D render of a glowing mystical orb — created entirely in Blender with volumetric lighting and shader magic.</p>
-        <img src="gifs/mystical_orb.gif" alt="Mystical Orb animation" style="width:100%;margin-top:1rem;border-radius:2px;opacity:0.85;" />
-        <span class="project-arrow">↗</span>
-      </div>
-
-      <div class="project-card reveal reveal-delay-1">
-        <div class="project-num">07</div>
-        <span class="project-tag">Adobe Animate</span>
-        <h3 class="project-name">Timpview Logo</h3>
-        <p class="project-note">An animated logo sequence for Timpview, crafted frame-by-frame using Adobe Animate.</p>
-        <img src="gifs/timpview_logo.gif" alt="Timpview logo animation" style="width:100%;margin-top:1rem;border-radius:2px;opacity:0.85;" />
-        <span class="project-arrow">↗</span>
-      </div>
 
     </div>
   </section>
@@ -1036,9 +1128,11 @@
 
     <div class="cert-list">
 
-      <a href="certificates/Jeffrey_Hamilton_Architectural_Design_2_05092025.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Architectural_Design_2_05092025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-1">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Architectural Design 2</div>
@@ -1046,9 +1140,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_CAD_Architectural_Design_I_12192023.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_CAD_Architectural_Design_I_12192023.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-2">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">CAD Architectural Design I</div>
@@ -1056,9 +1152,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_1_05122025.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_1_05122025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-3">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Computer Programming 1</div>
@@ -1066,9 +1164,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_2_Java__12182025.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Computer_Programming_2_Java__12182025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-4">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Computer Programming 2 — Java</div>
@@ -1076,9 +1176,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Digital_Media_1_12052024.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Digital_Media_1_12052024.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-5">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Digital Media 1</div>
@@ -1086,9 +1188,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Game_Development_Fundamentals_12122024.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Game_Development_Fundamentals_12122024.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-6">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Game Development Fundamentals</div>
@@ -1096,9 +1200,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Robotics_1_12152025.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Robotics_1_12152025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-1">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Robotics 1</div>
@@ -1106,9 +1212,11 @@
         </div>
       </a>
 
-      <a href="certificates/Jeffrey_Hamilton_Unmanned_Aerial_Systems_12182025.pdf" target="_blank" rel="noopener" class="cert-item">
+      <a href="certificates/Jeffrey_Hamilton_Unmanned_Aerial_Systems_12182025.pdf" target="_blank" rel="noopener" class="cert-item reveal reveal-delay-2">
         <div class="cert-item-icon">
-          <img src="gifs/timpview_logo.gif" alt="Timpview" style="width:100%;height:100%;object-fit:contain;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div class="cert-item-name">Unmanned Aerial Systems</div>
